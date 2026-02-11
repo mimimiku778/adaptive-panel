@@ -1,0 +1,7 @@
+{
+    "name": "Adaptive Panel",
+    "description": "OLED burn-in protection: panel color adapts to dark/light mode and maximized window header bar color",
+    "uuid": "adaptive-panel@mimimiku778",
+    "url": "https://github.com/mimimiku778/adaptive-panel",
+    "shell-version": ["@SHELL_VERSION@"]
+}

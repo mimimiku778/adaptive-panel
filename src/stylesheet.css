@@ -1,0 +1,50 @@
+/* --- Light panel: dark text/icons --- */
+
+.adaptive-panel-light .panel-button {
+    color: #3D3D3D !important;
+}
+.adaptive-panel-light .panel-button:hover {
+    background-color: rgba(61, 61, 61, 0.10) !important;
+    color: #3D3D3D !important;
+}
+.adaptive-panel-light .panel-button:active,
+.adaptive-panel-light .panel-button:checked {
+    background-color: rgba(61, 61, 61, 0.18) !important;
+    color: #3D3D3D !important;
+}
+.adaptive-panel-light .panel-button .clock {
+    color: #3D3D3D !important;
+}
+
+/* --- Dark panel: light text/icons --- */
+
+.adaptive-panel-dark .panel-button {
+    color: #f2f2f2 !important;
+}
+.adaptive-panel-dark .panel-button:hover {
+    background-color: rgba(242, 242, 242, 0.17) !important;
+    color: #f2f2f2 !important;
+}
+.adaptive-panel-dark .panel-button:active,
+.adaptive-panel-dark .panel-button:checked {
+    background-color: rgba(242, 242, 242, 0.25) !important;
+    color: #f2f2f2 !important;
+}
+.adaptive-panel-dark .panel-button .clock {
+    color: #f2f2f2 !important;
+}
+
+/* --- Workspace dots --- */
+
+.adaptive-panel-light .workspace-dot {
+    background-color: rgba(61, 61, 61, 0.40) !important;
+}
+.adaptive-panel-light .workspace-dot.active {
+    background-color: #3D3D3D !important;
+}
+.adaptive-panel-dark .workspace-dot {
+    background-color: rgba(242, 242, 242, 0.40) !important;
+}
+.adaptive-panel-dark .workspace-dot.active {
+    background-color: #f2f2f2 !important;
+}
