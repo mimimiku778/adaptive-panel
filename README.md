@@ -1,25 +1,25 @@
 # Adaptive Panel
 
-A GNOME Shell extension that dynamically adapts the top panel color to match your desktop environment -- designed to protect OLED displays from burn-in.
+A GNOME Shell extension that makes the top panel color match the maximized window's header bar.
 
-## Features
+Eliminates the visible boundary between the panel and window, creating a seamless look -- and helps prevent OLED burn-in by avoiding a static panel color.
 
-- **Dark/Light mode aware** -- Panel automatically switches between dark and light backgrounds based on your system color scheme
-- **Header bar sync** -- When a window is maximized, the panel color smoothly transitions to match the window's header bar
-- **Smart text contrast** -- Text and icon colors automatically adjust for readability against any background
-- **Smooth transitions** -- All color changes animate with a 350ms transition
-- **OLED friendly** -- Prevents static bright/dark regions that cause burn-in on OLED panels
+| Light app maximized | Dark app maximized |
+|---|---|
+| ![light](screenshots/light.png) | ![dark](screenshots/dark.png) |
 
-## How It Works
+## What it does
 
-The extension picks the color of the area just below the panel (inside the header bar of a maximized window) at three horizontal points, then uses the median luminance sample to set the panel background. When no window is maximized or the overview is open, it falls back to theme-appropriate colors.
-
-## Requirements
-
-- GNOME Shell 49+
-- Wayland or X11
+| Problem | Solution |
+|---|---|
+| The panel stays one fixed color regardless of the window below it | Panel color automatically syncs to the maximized window's header bar |
+| Dark panel + light app (or vice versa) creates a harsh boundary | Panel blends seamlessly with the active window |
+| Static panel color can cause OLED burn-in | Panel color changes dynamically, reducing burn-in risk |
+| Switching dark/light mode doesn't update the panel to match | Panel follows the system color scheme when no window is maximized |
 
 ## Installation
+
+Tested on Ubuntu 25.10 (GNOME Shell 49).
 
 ```bash
 git clone https://github.com/mimimiku778/adaptive-panel.git
@@ -30,13 +30,11 @@ bash install.sh
 Then restart GNOME Shell:
 - **Wayland**: Log out and log back in
 
-## Uninstall
+### Uninstall
 
 ```bash
 bash install.sh --uninstall
 ```
-
-Then restart GNOME Shell.
 
 ## License
 
@@ -46,26 +44,22 @@ Then restart GNOME Shell.
 
 # Adaptive Panel (日本語)
 
-GNOME Shell のトップパネルの色をデスクトップ環境に合わせて動的に変更する拡張機能です。OLED ディスプレイの焼付き防止を目的としています。
+GNOME Shell のトップパネルの色を、最大化ウィンドウのヘッダーバーに合わせて動的に変更する拡張機能です。
 
-## 機能
+パネルとウィンドウの境界をなくし、シームレスな見た目を実現します。パネル色が固定されないため、OLED の焼付き防止にも効果があります。
 
-- **ダーク/ライトモード対応** -- システムのカラースキームに合わせてパネルの背景色を自動切替
-- **ヘッダーバー同期** -- ウィンドウが最大化されると、パネルの色がウィンドウのヘッダーバーの色にスムーズに変化
-- **スマートテキストコントラスト** -- 背景色に応じてテキストとアイコンの色を自動調整
-- **スムーズなトランジション** -- すべての色変更は 350ms のアニメーション付き
-- **OLED フレンドリー** -- パネルの固定的な明暗領域を防ぎ、焼付きを軽減
+## 何をするか
 
-## 仕組み
-
-パネル直下（最大化ウィンドウのヘッダーバー内）の色を水平方向 3 点でサンプリングし、輝度の中央値を使ってパネルの背景色を決定します。最大化ウィンドウがない場合やオーバービュー表示中は、テーマに適した色にフォールバックします。
-
-## 必要条件
-
-- GNOME Shell 49 以上
-- Wayland または X11
+| 問題 | 解決 |
+|---|---|
+| パネルの色が固定で、下のウィンドウと合わない | パネルの色が最大化ウィンドウのヘッダーバーに自動同期 |
+| ダークパネル＋ライトアプリ（またはその逆）で境界が目立つ | パネルがウィンドウとシームレスに一体化 |
+| パネル色が固定だと OLED の焼付きの原因になる | パネル色が動的に変わり、焼付きリスクを軽減 |
+| ダーク/ライトモード切替がパネルに反映されない | 最大化ウィンドウがないときはシステムのカラースキームに追従 |
 
 ## インストール
+
+Ubuntu 25.10 (GNOME Shell 49) で動作確認済み。
 
 ```bash
 git clone https://github.com/mimimiku778/adaptive-panel.git
@@ -76,13 +70,11 @@ bash install.sh
 GNOME Shell を再起動してください:
 - **Wayland**: ログアウト → ログイン
 
-## アンインストール
+### アンインストール
 
 ```bash
 bash install.sh --uninstall
 ```
-
-その後 GNOME Shell を再起動してください。
 
 ## ライセンス
 
