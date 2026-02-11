@@ -17,6 +17,10 @@ Eliminates the visible boundary between the panel and window, creating a seamles
 | Static panel color can cause OLED burn-in | Panel color changes dynamically, reducing burn-in risk |
 | Switching dark/light mode doesn't update the panel to match | Panel follows the system color scheme when no window is maximized |
 
+## Tip
+
+For best results, combine with GNOME's built-in scheduled dark/light theme switching (Settings > Appearance) so the panel color adapts throughout the day automatically.
+
 ## Installation
 
 Tested on Ubuntu 25.10 (GNOME Shell 49).
@@ -60,6 +64,10 @@ GNOME Shell のトップパネルの色を、最大化ウィンドウのヘッ�
 | ダークパネル＋ライトアプリ（またはその逆）で境界が目立つ | パネルがウィンドウとシームレスに一体化 |
 | パネル色が固定だと OLED の焼付きの原因になる | パネル色が動的に変わり、焼付きリスクを軽減 |
 | ダーク/ライトモード切替がパネルに反映されない | 最大化ウィンドウがないときはシステムのカラースキームに追従 |
+
+## ヒント
+
+GNOME 標準の時間帯によるダーク/ライトテーマ自動切替（設定 > 外観）と併用すると、一日を通してパネル色が自動で最適化されます。
 
 ## インストール
 
