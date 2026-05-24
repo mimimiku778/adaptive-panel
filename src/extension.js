@@ -303,11 +303,25 @@ export default class AdaptivePanelExtension extends Extension {
 
         // Panel child boxes use private API (_leftBox etc.) because
         // there is no public accessor for iterating panel containers.
+        // Walk all descendants so deeply-nested icons (GNOME 50 QuickSettings
+        // wraps indicators inside extra boxes) inherit the color override.
         for (const box of [Main.panel._leftBox, Main.panel._centerBox, Main.panel._rightBox]) {
             if (!box)
                 continue;
             for (const child of box.get_children())
-                child.set_style(`color: ${fg};`);
+                this._setColorRecursive(child, fg);
+        }
+    }
+
+    _setColorRecursive(actor, fg) {
+        try {
+            actor.set_style(`color: ${fg};`);
+        } catch (_e) {
+            // Some actors may not accept set_style; skip them
+        }
+        if (typeof actor.get_children === 'function') {
+            for (const c of actor.get_children())
+                this._setColorRecursive(c, fg);
         }
     }
 
@@ -319,7 +333,19 @@ export default class AdaptivePanelExtension extends Extension {
             if (!box)
                 continue;
             for (const child of box.get_children())
-                child.set_style(null);
+                this._clearStyleRecursive(child);
+        }
+    }
+
+    _clearStyleRecursive(actor) {
+        try {
+            actor.set_style(null);
+        } catch (_e) {
+            // ignore
+        }
+        if (typeof actor.get_children === 'function') {
+            for (const c of actor.get_children())
+                this._clearStyleRecursive(c);
         }
     }
 }

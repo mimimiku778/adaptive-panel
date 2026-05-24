@@ -1,6 +1,15 @@
-/* --- Light panel: dark text/icons --- */
+/* --- Light panel: dark text/icons ---
+ * Selectors target both direct .panel-button and nested elements that
+ * GNOME 50 QuickSettings uses for indicator icons (e.g. system-status-icon,
+ * StIcon nested under quick-settings-button).
+ */
 
-.adaptive-panel-light .panel-button {
+.adaptive-panel-light .panel-button,
+.adaptive-panel-light .panel-button StIcon,
+.adaptive-panel-light .panel-button StLabel,
+.adaptive-panel-light .system-status-icon,
+.adaptive-panel-light .quick-settings-button,
+.adaptive-panel-light .quick-settings-indicator {
     color: #3D3D3D !important;
 }
 .adaptive-panel-light .panel-button:hover {
@@ -18,7 +27,12 @@
 
 /* --- Dark panel: light text/icons --- */
 
-.adaptive-panel-dark .panel-button {
+.adaptive-panel-dark .panel-button,
+.adaptive-panel-dark .panel-button StIcon,
+.adaptive-panel-dark .panel-button StLabel,
+.adaptive-panel-dark .system-status-icon,
+.adaptive-panel-dark .quick-settings-button,
+.adaptive-panel-dark .quick-settings-indicator {
     color: #f2f2f2 !important;
 }
 .adaptive-panel-dark .panel-button:hover {
