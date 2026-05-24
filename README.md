@@ -23,7 +23,7 @@ For best results, combine with GNOME's built-in scheduled dark/light theme switc
 
 ## Installation
 
-Tested on Ubuntu 25.10 (GNOME Shell 49).
+Tested on Ubuntu 25.10 / 26.04 LTS (GNOME Shell 49 and 50).
 
 ```bash
 git clone https://github.com/mimimiku778/adaptive-panel.git
@@ -71,7 +71,7 @@ GNOME 標準の時間帯によるダーク/ライトテーマ自動切替（設�
 
 ## インストール
 
-Ubuntu 25.10 (GNOME Shell 49) で動作確認済み。
+Ubuntu 25.10 / 26.04 LTS (GNOME Shell 49 / 50) で動作確認済み。
 
 ```bash
 git clone https://github.com/mimimiku778/adaptive-panel.git
