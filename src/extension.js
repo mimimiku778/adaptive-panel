@@ -1,7 +1,6 @@
 import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import Shell from 'gi://Shell';
-import Meta from 'gi://Meta';
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
@@ -20,7 +19,7 @@ export default class AdaptivePanelExtension extends Extension {
         this._pollId = 0;
         this._overviewClosing = false;
         this._settling = false;
-        this._lastWindowColor = null;
+        this._lastColor = null;
         this._currentBg = null;
         this._applyingStyle = false;
 
@@ -59,14 +58,15 @@ export default class AdaptivePanelExtension extends Extension {
 
         this._connectTo(Main.overview, 'hidden', () => {
             this._overviewClosing = false;
-            const maxWin = this._findMaximizedWindow();
-            if (maxWin && this._lastWindowColor) {
-                const {r, g, b} = this._lastWindowColor;
+            // Restore the last sampled color (window header bar or
+            // wallpaper) immediately to avoid a flash of the theme
+            // default, then re-verify once rendering settles.
+            if (this._lastColor) {
+                const {r, g, b} = this._lastColor;
                 this._applyColor(r, g, b);
             } else {
                 this._applyThemeColor();
             }
-            // Let rendering settle before color-picking again
             this._settling = true;
             this._clearSource('_settleId');
             this._settleId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 500, () => {
@@ -82,10 +82,11 @@ export default class AdaptivePanelExtension extends Extension {
 
         this._scheduleUpdate();
 
-        // Poll every 5 s to catch late header bar repaints (e.g. Electron apps)
+        // Poll every 5 s to catch late header bar repaints (e.g. Electron
+        // apps) and wallpaper changes (e.g. slideshow backgrounds).
         this._pollId = GLib.timeout_add(GLib.PRIORITY_DEFAULT_IDLE, 5000, () => {
             if (!this._settling && !Main.overview.visible &&
-                !this._overviewClosing && this._findMaximizedWindow())
+                !this._overviewClosing)
                 this._updatePanel();
             return GLib.SOURCE_CONTINUE;
         });
@@ -201,6 +202,8 @@ export default class AdaptivePanelExtension extends Extension {
     async _updatePanel() {
         const gen = ++this._generation;
 
+        // Overview / lock screen: nothing meaningful sits below the
+        // panel, so fall back to the system theme color.
         if (Main.overview.visible || this._overviewClosing ||
             Main.sessionMode.currentMode === 'unlock-dialog' ||
             Main.sessionMode.currentMode === 'lock-screen') {
@@ -211,25 +214,9 @@ export default class AdaptivePanelExtension extends Extension {
         if (this._settling)
             return;
 
-        const maxWin = this._findMaximizedWindow();
-        if (maxWin)
-            await this._pickAndApply(gen);
-        else
-            this._applyThemeColor();
-    }
-
-    _findMaximizedWindow() {
-        const pri = Main.layoutManager.primaryIndex;
-        const ws = global.workspace_manager.get_active_workspace();
-        const windows = ws.list_windows().filter(w =>
-            w.get_monitor() === pri &&
-            !w.minimized &&
-            w.window_type === Meta.WindowType.NORMAL &&
-            w.maximized_horizontally && w.maximized_vertically
-        );
-        if (windows.length === 0)
-            return null;
-        return global.display.sort_windows_by_stacking(windows).at(-1);
+        // Sample whatever is directly below the panel: a maximized
+        // window's header bar, or the wallpaper on an empty desktop.
+        await this._pickAndApply(gen);
     }
 
     async _pickAndApply(gen) {
@@ -258,7 +245,7 @@ export default class AdaptivePanelExtension extends Extension {
             // Median by luminance to ignore outliers (e.g. a button)
             colors.sort((a, b) => this._lum(a) - this._lum(b));
             const {r, g, b} = colors[1];
-            this._lastWindowColor = {r, g, b};
+            this._lastColor = {r, g, b};
             this._applyColor(r, g, b);
         } catch (e) {
             console.debug(`[adaptive-panel] pick_color failed: ${e.message}`);
